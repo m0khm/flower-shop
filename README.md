@@ -1,4 +1,4 @@
-#The web site of flower shop
+# The web site of flower shop
 # Цветочница Анюта 🌿🛒
 ```
  ПОЛНАЯ СТРУКТУРА
