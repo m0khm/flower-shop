@@ -1,30 +1,25 @@
-# ──────────── Build Stage ────────────
+# ---------- build stage ----------
 FROM node:lts AS build
-
-# Рабочая директория
 WORKDIR /app
 
-# Копируем package.json и yarn.lock (фиксируем версии)
-COPY package.json yarn.lock ./
+# Копируем только package.json (без lock-файла)
+COPY package.json ./
 
-# Устанавливаем зависимости через Yarn
-RUN yarn install --frozen-lockfile
+# Ставим зависимости через npm (создаст внутрии контейнера свой lock-файл, но нам это не критично)
+RUN npm install
 
-# Копируем весь исходный код и собираем статику
+# Копируем весь остальной код и собираем
 COPY . .
-RUN yarn build
+RUN npm run build
 
-# ───────── Production Stage ─────────
+# ---------- production stage ----------
 FROM nginx:alpine
 
-# Копируем собранную статику в папку, из которой Nginx отдаёт файлы
+# Копируем собранную статику
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# (Опционально) Если у вас есть свой nginx.conf — заменяем им дефолтный
+# (опционально) свой конфиг nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Экспонируем порт 80 (по умолчанию)
 EXPOSE 80
-
-# Запускаем Nginx в форграунд-режиме
 CMD ["nginx", "-g", "daemon off;"]
