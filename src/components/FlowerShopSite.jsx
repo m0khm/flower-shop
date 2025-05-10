@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { create } from 'zustand';
 import { loadStripe } from '@stripe/stripe-js';
 
-// Stripe public key (Vite will replace import.meta.env.VITE_STRIPE_PK)
+// Stripe public key (Vite заменит import.meta.env)
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 // Zustand store для корзины
@@ -29,7 +29,7 @@ const useCart = create((set) => ({
   clear: () => set({ items: [] }),
 }));
 
-// Карточка растения
+// Компонент карточки растения
 function PlantCard({ plant, index }) {
   const add = useCart((s) => s.add);
   return (
@@ -53,10 +53,7 @@ function PlantCard({ plant, index }) {
         </CardContent>
         <CardFooter className="flex justify-between items-center">
           <span className="text-lg font-semibold text-green-700">
-            {plant.price.toLocaleString('ru-RU', {
-              style: 'currency',
-              currency: 'RUB',
-            })}
+            {plant.price.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}
           </span>
           <Button size="sm" className="gap-2" onClick={() => add(plant)}>
             <ShoppingCart className="w-4 h-4" />
@@ -68,7 +65,7 @@ function PlantCard({ plant, index }) {
   );
 }
 
-// Выдвижная панель корзины
+// Компонент выдвижной корзины
 function CartDrawer({ open, onClose }) {
   const { items, remove, clear } = useCart();
   const total = items.reduce((sum, p) => sum + p.price * p.qty, 0);
@@ -113,11 +110,7 @@ function CartDrawer({ open, onClose }) {
                   <div className="flex-1">
                     <p className="font-medium">{p.name}</p>
                     <p className="text-sm text-gray-500">
-                      {p.qty} ×{' '}
-                      {p.price.toLocaleString('ru-RU', {
-                        style: 'currency',
-                        currency: 'RUB',
-                      })}
+                      {p.qty} × {p.price.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}
                     </p>
                   </div>
                   <Button variant="ghost" size="icon" onClick={() => remove(p.id)}>
@@ -132,26 +125,12 @@ function CartDrawer({ open, onClose }) {
           <footer className="border-t p-4 space-y-2">
             <div className="flex justify-between font-semibold text-lg">
               <span>Итого:</span>
-              <span>
-                {total.toLocaleString('ru-RU', {
-                  style: 'currency',
-                  currency: 'RUB',
-                })}
-              </span>
+              <span>{total.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</span>
             </div>
-            <Button
-              className="w-full"
-              disabled={!items.length}
-              onClick={handleCheckout}
-            >
+            <Button className="w-full" disabled={!items.length} onClick={handleCheckout}>
               Оплатить через Stripe
             </Button>
-            <Button
-              variant="ghost"
-              className="w-full"
-              disabled={!items.length}
-              onClick={clear}
-            >
+            <Button variant="ghost" className="w-full" disabled={!items.length} onClick={clear}>
               Очистить корзину
             </Button>
           </footer>
@@ -161,25 +140,22 @@ function CartDrawer({ open, onClose }) {
   );
 }
 
-// Главный компонент
+// Главный компонент сайта
 export default function FlowerShopSite() {
   const [plants, setPlants] = useState([]);
-  const cartCount = useCart((s) =>
-    s.items.reduce((n, p) => n + p.qty, 0)
-  );
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const cartCount = useCart((s) => s.items.reduce((n, p) => n + p.qty, 0));
+  const [drawer, setDrawer] = useState(false);
 
   useEffect(() => {
     fetch('/plants.json')
       .then((r) => r.json())
       .then(setPlants)
-      .catch(() =>
+      .catch(() => {
         setPlants([
           {
             id: 1,
             name: 'Монстера Делициоза',
-            description:
-              'Крупное вечнозелёное растение с выразительными листьями.',
+            description: 'Крупное вечнозелёное растение с выразительными листьями.',
             price: 4500,
             image:
               'https://images.unsplash.com/photo-1556796876-0ef0b4dfe3bd?auto=format&fit=crop&w=800&q=80',
@@ -187,8 +163,7 @@ export default function FlowerShopSite() {
           {
             id: 2,
             name: 'Фикус Эластика',
-            description:
-              'Неприхотливый фикус с глянцевыми листьями – хит продаж.',
+            description: 'Неприхотливый фикус с глянцевыми листьями – хит продаж.',
             price: 3200,
             image:
               'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=800&q=80',
@@ -201,8 +176,8 @@ export default function FlowerShopSite() {
             image:
               'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80',
           },
-        ])
-      );
+        ]);
+      });
   }, []);
 
   return (
@@ -232,9 +207,9 @@ export default function FlowerShopSite() {
             <Facebook className="w-6 h-6" />
           </a>
           <button
+            onClick={() => setDrawer(true)}
             className="relative"
             aria-label="Открыть корзину"
-            onClick={() => setDrawerOpen(true)}
           >
             <ShoppingCart className="w-7 h-7" />
             {cartCount > 0 && (
@@ -246,7 +221,7 @@ export default function FlowerShopSite() {
         </nav>
       </header>
 
-      {/* Hero */}
+      {/* Херобаннер */}
       <section className="flex flex-col items-center justify-center text-center py-20 px-4">
         <motion.h2
           initial={{ opacity: 0, scale: 0.9 }}
@@ -254,20 +229,15 @@ export default function FlowerShopSite() {
           transition={{ duration: 0.6 }}
           className="text-4xl md:text-6xl font-black text-green-800 drop-shadow-lg"
         >
-          Живые растения — живая любовь
+          Живые растения — живая любовь
         </motion.h2>
         <p className="mt-4 max-w-2xl text-lg text-gray-700">
-          Выберите идеальное растение для дома или офиса и получайте быструю
-          доставку по всему городу.
+          Выберите идеальное растение для дома или офиса и получайте быструю доставку по всему городу.
         </p>
         <Button
           size="lg"
           className="mt-8 px-8 py-6 text-lg font-bold animate-bounce"
-          onClick={() =>
-            document.getElementById('products')?.scrollIntoView({
-              behavior: 'smooth',
-            })
-          }
+          onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
         >
           Смотреть каталог
         </Button>
@@ -275,17 +245,20 @@ export default function FlowerShopSite() {
 
       {/* Каталог */}
       <main id="products" className="container mx-auto flex-1 px-4 pb-20">
-        <h3 className="text-3xl font-bold text-center mb-10">
-          Наши растения
-        </h3>
+        <h3 className="text-3xl font-bold text-center mb-10">Наши растения</h3>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {plants.map((p, idx) => (
-            <PlantCard key={p.id} plant={p} index={idx} />
-          ))}
+          {plants.map((p, idx) => (<PlantCard key={p.id} plant={p} index={idx} />))}
         </div>
       </main>
 
       {/* Футер */}
       <footer className="bg-green-700 text-white text-center py-6">
         <p>© {new Date().getFullYear()} Цветочница Анюта. Все права защищены.</p>
-        <p className="mt-2">Сделано
+        <p className="mt-2">Сделано с ❤️ и растениями.</p>
+      </footer>
+
+      {/* Выдвижная корзина */}
+      <CartDrawer open={drawer} onClose={() => setDrawer(false)} />
+    </div>
+  );
+}
