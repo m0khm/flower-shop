@@ -27,6 +27,9 @@
        └─ api/
            └─ checkout.js               # Stripe Checkout session
 ```
+
+```
 Фронт: Vite + React + Tailwind + Zustand + framer‑motion.
 Бэкенд: Express + Stripe.
 Контейнеризация: Docker / docker‑compose.
+```
