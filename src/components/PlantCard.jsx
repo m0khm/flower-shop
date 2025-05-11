@@ -6,15 +6,28 @@ import { useCart } from '@/store/cart';
 export default function PlantCard({ plant, index }) {
   const add = useCart(s => s.add);
   return (
-    <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay: index*0.1 }}>
-      <Card>
-        <img src={plant.image} alt={plant.name} className="w-full h-48 object-cover"/>
-        <CardContent>
-          <CardTitle>{plant.name}</CardTitle>
-          <p className="text-sm">{plant.description}</p>
+    <motion.div
+      className="w-full"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1 }}
+    >
+      <Card className="overflow-hidden h-full flex flex-col">
+        {/* Фиксированная высота изображения и object-cover */}
+        <div className="h-64 w-full overflow-hidden">
+          <img
+            src={plant.image}
+            alt={plant.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <CardContent className="flex-1">
+          {/* Крупнее заголовок и текст */}
+          <CardTitle className="text-xl">{plant.name}</CardTitle>
+          <p className="text-base mt-2">{plant.description}</p>
         </CardContent>
-        <CardFooter>
-          <span className="font-bold">{plant.price} ₽</span>
+        <CardFooter className="justify-between items-center">
+          <span className="text-lg font-bold">{plant.price} ₽</span>
           <Button onClick={() => add(plant)}>В корзину</Button>
         </CardFooter>
       </Card>
