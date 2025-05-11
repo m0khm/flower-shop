@@ -1,5 +1,10 @@
+// src/pages/account.jsx
 import { signOut } from 'next-auth/react';
 
+/**
+ * SSR-страница «Личный кабинет».
+ * session приходит из getServerSideProps.
+ */
 export default function Account({ session }) {
   return (
     <div className="max-w-md mx-auto space-y-4">
@@ -17,10 +22,12 @@ export default function Account({ session }) {
   );
 }
 
+/*  ─────  SSR  ─────  */
 export async function getServerSideProps(ctx) {
   const { getSession } = await import('next-auth/react');
   const session = await getSession(ctx);
 
+  // если не авторизован — редиректим на /auth/login
   if (!session) {
     return {
       redirect: { destination: '/auth/login', permanent: false },
