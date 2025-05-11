@@ -1,21 +1,27 @@
-# ----- build stage -----
+# ───── Build Stage ──────
 FROM node:lts AS build
 WORKDIR /app
 
+# Копируем package.json + lock-файл
 COPY package.json package-lock.json ./
-RUN npm ci            # ставим по lock-файлу
 
+# Ставим зависимости по lock-файлу
+RUN npm ci
+
+# Копируем весь остальной код и билдим Next.js
 COPY . .
 RUN npm run build
 
-# --- runtime stage ---
+# ─── Runtime Stage ──────
 FROM node:lts-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 
-# копируем всё, что собралось на этапе build
+# Копируем из build-образа всё содержимое /app
 COPY --from=build /app .
 
+# Экспонируем порт, на котором Next.js будет слушать
 EXPOSE 3000
-CMD ["npm", "start"]
 
+# Стартуем сервер
+CMD ["npm", "start"]
