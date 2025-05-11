@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "Монстера",
+    "description": "Большие декоративные листья, отлично очищает воздух",
+    "price": 1500,
+    "image": "/images/monstera.jpg"
+  },
+  {
+    "id": "2",
+    "name": "Кактус",
+    "description": "Миниатюрный суккулент в глиняном горшке",
+    "price": 700,
+    "image": "/images/cactus.jpg"
+  },
+  {
+    "id": "3",
+    "name": "Сансевиерия",
+    "description": "Выносливое комнатное растение, неприхотливое в уходе",
+    "price": 1200,
+    "image": "/images/sansevieria.jpg"
+  }
+]
