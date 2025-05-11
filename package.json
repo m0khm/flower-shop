@@ -18,7 +18,7 @@
     "zustand": "^4.3.6",
     "framer-motion": "^10.12.16",
     "bcryptjs": "^2.4.3",
-    "@headlessui/react": "^1.9.16",
+    "@headlessui/react": "^1.9.17",
     "lucide-react": "^0.283.0"
   },
   "devDependencies": {
