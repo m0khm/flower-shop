@@ -1,13 +1,11 @@
-import '@/styles/globals.css';
-import { SessionProvider } from 'next-auth/react';
+// src/pages/_app.jsx
+import '@/styles/globals.css';    // подключаем Tailwind
 import Layout from '@/components/Layout';
 
-export default function App({ Component, pageProps: { session, ...props } }) {
+export default function App({ Component, pageProps }) {
   return (
-    <SessionProvider session={session}>
-      <Layout>
-        <Component {...props} />
-      </Layout>
-    </SessionProvider>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   );
 }
