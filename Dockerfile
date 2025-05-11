@@ -1,22 +1,23 @@
 # ─────── Build Stage ───────
 FROM node:lts AS build
 
+# Рабочая директория
 WORKDIR /app
 
-# Копируем манифесты и lock-файл (если есть)
-COPY package.json yarn.lock ./
+# Копируем только package.json
+COPY package.json ./
 
-# Устанавливаем зависимости
-RUN yarn install --frozen-lockfile
+# Устанавливаем зависимости через npm
+RUN npm install
 
-# Копируем весь проект и собираем
+# Копируем весь остальной код и собираем
 COPY . .
-RUN yarn build
+RUN npm run build
 
-# ───── Production Stage ────
+# ─── Production Stage ───
 FROM nginx:alpine
 
-# Копируем собранную статику в папку Nginx
+# Копируем собранную статику
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Экспонируем порт 80
