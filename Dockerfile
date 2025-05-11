@@ -1,19 +1,18 @@
-# ─────── Build stage ───────
+# ----- build stage -----
 FROM node:lts AS build
 WORKDIR /app
 
-# Копируем манифесты и lock-файл
 COPY package.json package-lock.json ./
+RUN npm ci            # ставим по lock-файлу
 
-# Ставим зависимости строго по lock-файлу
-RUN npm ci
-
-# Копируем весь код и собираем
 COPY . .
 RUN npm run build
 
-# ─── Production stage ──────
-FROM nginx:alpine
-COPY --from=build /app/.next /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# ----- runtime -----
+FROM node:lts-alpine
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=build /app .        # копируем .next, public и т.д.
+
+EXPOSE 3000
+CMD ["npm", "start"]
