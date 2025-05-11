@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog } from '@headlessui/react';
 import { X } from 'lucide-react';
 import { useCart } from '@/store/cart';
@@ -7,6 +7,13 @@ import { Button } from '@/components/ui/button';
 export default function CartDrawer() {
   const { items, remove, clear } = useCart();
   const [isOpen, setIsOpen] = useState(false);
+
+  // слушаем событие открытия корзины
+  useEffect(() => {
+    const handler = () => setIsOpen(true);
+    document.addEventListener('open-cart', handler);
+    return () => document.removeEventListener('open-cart', handler);
+  }, []);
 
   return (
     <>
