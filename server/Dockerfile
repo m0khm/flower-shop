@@ -1,17 +1,18 @@
-FROM node:lts
+# server/Dockerfile
 
+FROM node:lts
 WORKDIR /app
 
-# Копируем package.json и lock-файл (если есть)
-COPY package.json yarn.lock ./
+# Копируем манифест зависимостей
+COPY package.json ./
 
-# Устанавливаем зависимости
-RUN yarn install --frozen-lockfile
+# Ставим зависимости
+RUN npm install
 
-# Копируем весь код бэкенда
+# Копируем весь остальной код
 COPY . .
 
-# Экспонируем порт (должен совпадать с вашим server/index.js)
+# Экспонируем порт (должен совпадать с тем, что слушает index.js)
 EXPOSE 4000
 
 # Запускаем сервер
