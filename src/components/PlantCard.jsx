@@ -1,10 +1,11 @@
+// src/components/PlantCard.jsx
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/store/cart';
 
 export default function PlantCard({ plant, index }) {
-  const add = useCart(s => s.add);
+  const add = useCart((s) => s.add);
   return (
     <motion.div
       className="w-full"
@@ -13,7 +14,6 @@ export default function PlantCard({ plant, index }) {
       transition={{ delay: index * 0.1 }}
     >
       <Card className="overflow-hidden h-full flex flex-col">
-        {/* Фиксированная высота изображения и object-cover */}
         <div className="h-64 w-full overflow-hidden">
           <img
             src={plant.image}
@@ -22,7 +22,6 @@ export default function PlantCard({ plant, index }) {
           />
         </div>
         <CardContent className="flex-1">
-          {/* Крупнее заголовок и текст */}
           <CardTitle className="text-xl">{plant.name}</CardTitle>
           <p className="text-base mt-2">{plant.description}</p>
         </CardContent>
