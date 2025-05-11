@@ -1,27 +1,19 @@
-# ─────── Build Stage ───────
+# ─────── Build stage ───────
 FROM node:lts AS build
-
-# Рабочая директория
 WORKDIR /app
 
-# Копируем только package.json
-COPY package.json ./
+# Копируем манифесты и lock-файл
+COPY package.json package-lock.json ./
 
-# Устанавливаем зависимости через npm
-RUN npm install
+# Ставим зависимости строго по lock-файлу
+RUN npm ci
 
-# Копируем весь остальной код и собираем
+# Копируем весь код и собираем
 COPY . .
 RUN npm run build
 
-# ─── Production Stage ───
+# ─── Production stage ──────
 FROM nginx:alpine
-
-# Копируем собранную статику
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Экспонируем порт 80
+COPY --from=build /app/.next /usr/share/nginx/html
 EXPOSE 80
-
-# Запускаем Nginx
 CMD ["nginx", "-g", "daemon off;"]
