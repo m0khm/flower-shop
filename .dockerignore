@@ -1,0 +1,25 @@
+# Игнорируем папки с локальными зависимостями
+node_modules
+server/node_modules
+
+# Локальная база Prisma / dev-база
+dev.db
+server/dev.db
+
+# Сборки, статика и логи
+dist
+.build
+*.log
+
+# Git-репозиторий и CI
+.git
+.github
+
+# Переменные окружения
+.env
+.env.* 
+
+# IDE и операционка
+.vscode
+.idea
+.DS_Store
