@@ -1,31 +1,45 @@
 ### The web site of flower shop
 # Цветочница Анюта 🌿🛒
 ```
- ПОЛНАЯ СТРУКТУРА
-└─ flower-shop/
-   ├─ .github/workflows/deploy.yml      # CI + деплой через SSH
-   ├─ .gitignore
-   ├─ Dockerfile                        # multi‑stage build (Vite → Nginx)
-   ├─ docker-compose.yml                # prod‑стек
-   ├─ README.md                         # как развернуть
-   ├─ .env.example                      # переменные окружения
-   ├─ vite.config.js
-   ├─ tailwind.config.js
-   ├─ postcss.config.js
-   ├─ index.html                        # точка входа Vite
-   ├─ package.json                      # фронт‑часть
-   ├─ public/
-   │   └─ plants.json                   # каталог (фейк‑CMS)
-   ├─ src/
-   │   ├─ main.jsx
-   │   ├─ App.jsx
-   │   └─ components/
-   │       └─ FlowerShopSite.jsx        # основной UI (верс. 2.0)
-   └─ server/
-       ├─ package.json                  # backend
-       ├─ index.js                      # Express сервер + API routes
-       └─ api/
-           └─ checkout.js               # Stripe Checkout session
+flower-shop-next/
+├── next.config.js
+├── jsconfig.json
+├── package.json
+├── tailwind.config.js
+├── postcss.config.cjs
+├── prisma/
+│   └── schema.prisma
+├── .env
+├── lib/
+│   └── prisma.js
+├── store/
+│   └── cart.js
+├── pages/
+│   ├── _app.jsx
+│   ├── index.jsx
+│   ├── auth/
+│   │   ├── login.jsx
+│   │   └── register.jsx
+│   ├── account.jsx
+│   ├── admin/
+│   │   └── index.jsx
+│   └── api/
+│       ├── auth/
+│       │   └── [...nextauth].js
+│       ├── auth/
+│       │   └── register.js
+│       ├── plants.js
+│       └── checkout.js
+├── components/
+│   ├── Layout.jsx
+│   ├── PlantCard.jsx
+│   ├── CartDrawer.jsx
+│   └── ui/
+│       ├── card.jsx
+│       └── button.jsx
+└── public/
+    └── plants.json
+
 ```
 
 ```
