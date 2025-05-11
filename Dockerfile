@@ -8,11 +8,14 @@ RUN npm ci            # ставим по lock-файлу
 COPY . .
 RUN npm run build
 
-# ----- runtime -----
+# --- runtime stage ---
 FROM node:lts-alpine
 WORKDIR /app
 ENV NODE_ENV=production
-COPY --from=build /app .        # копируем .next, public и т.д.
+
+# копируем всё, что собралось на этапе build
+COPY --from=build /app .
 
 EXPOSE 3000
 CMD ["npm", "start"]
+
