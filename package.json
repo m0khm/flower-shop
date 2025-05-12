@@ -5,26 +5,24 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "next": "^13.4.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "15.3.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "next-auth": "^4.24.11",
-    "@prisma/client": "^4.15.0",
-    "prisma": "^4.15.0",
-    "stripe": "^12.11.0",
+    "@headlessui/react": "^2.2.2",
+    "lucide-react": "^0.283.0",
     "zustand": "^4.3.8",
     "framer-motion": "^10.12.8",
-    "bcryptjs": "^2.4.3",
-    "@headlessui/react": "^2.2.2",
-    "lucide-react": "^0.283.0"
+    "stripe": "^12.11.0"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.7",
-    "postcss": "^8.4.24",
-    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.31",
+    "autoprefixer": "^10.4.21",
     "@tailwindcss/forms": "^0.5.4",
     "tailwindcss-animate": "^1.0.6"
   }
