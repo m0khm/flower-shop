@@ -1,11 +1,12 @@
-// src/pages/auth/register.jsx
 import { useState } from 'react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // Компонент должен быть обычной функцией, не async
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch('/api/auth/register', {
@@ -43,6 +44,12 @@ export default function Register() {
         />
         <Button className="w-full">Создать аккаунт</Button>
       </form>
+      <p className="mt-4 text-center">
+        Уже есть аккаунт?{' '}
+        <Link href="/auth/login">
+          <a className="text-green-600 hover:underline">Войти</a>
+        </Link>
+      </p>
     </div>
   );
 }
