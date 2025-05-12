@@ -1,4 +1,3 @@
-// src/pages/api/auth/register.js
 import prisma from '@/lib/prisma';
 import { hash } from 'bcryptjs';
 
@@ -15,7 +14,11 @@ export default async function handler(req, res) {
     return res.status(409).json({ message: 'Пользователь уже существует' });
   }
   await prisma.user.create({
-    data: { email, password: await hash(password, 10), role: 'user' },
+    data: {
+      email,
+      password: await hash(password, 10),
+      role: 'user',
+    },
   });
-  res.status(201).json({ ok: true });
+  return res.status(201).json({ ok: true });
 }
