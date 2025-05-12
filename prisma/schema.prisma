@@ -1,20 +1,15 @@
-datasource db { provider = "sqlite"; url = env("DATABASE_URL") }
-generator client { provider = "prisma-client-js" }
-
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String
-  role      String   @default("user")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
-model Plant {
-  id          String  @id @default(cuid())
-  name        String
-  description String?
-  price       Float
-  image       String
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  role     String @default("user")
 }
