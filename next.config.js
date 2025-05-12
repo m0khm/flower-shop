@@ -1,6 +1,4 @@
-// next.config.js
 const path = require('path');
-
 module.exports = {
   reactStrictMode: true,
   webpack: (cfg) => {
@@ -8,4 +6,3 @@ module.exports = {
     return cfg;
   },
 };
-
