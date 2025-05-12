@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import useSWR from 'swr';
 import PlantCard from '@/components/PlantCard';
 
-export default function Home() {
-  const [plants, setPlants] = useState([]);
+const fetcher = (u) => fetch(u).then((r) => r.json());
 
-  useEffect(() => {
-    fetch('/api/plants')
-      .then((r) => r.json())
-      .then(setPlants);
-  }, []);
+export default function Home() {
+  const { data: plants = [] } = useSWR('/api/plants', fetcher);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {plants.map((plant, i) => (
-        <PlantCard key={plant.id} plant={plant} index={i} />
-      ))}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {plants.map((p) => <PlantCard key={p.id} plant={p} />)}
     </div>
   );
 }
