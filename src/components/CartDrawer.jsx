@@ -19,7 +19,7 @@ export default function CartDrawer() {
       <Dialog.Overlay className="fixed inset-0 bg-black/30" />
       <div className="fixed right-0 top-0 h-full w-80 bg-white shadow-xl p-4 overflow-auto">
         <header className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Корзина</h2>
+          <Dialog.Title className="text-xl font-semibold">Корзина</Dialog.Title>
           <button onClick={() => setOpen(false)}>
             <X size={24} />
           </button>
@@ -36,9 +36,9 @@ export default function CartDrawer() {
           ))
         )}
 
-        <footer className="mt-4 flex justify-between">
+        <div className="mt-4 flex justify-between">
           <Button onClick={clear}>Очистить</Button>
-        </footer>
+        </div>
       </div>
     </Dialog>
   );
