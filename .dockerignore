@@ -1,8 +1,5 @@
 node_modules
-server/node_modules
-.dev.db
-.DS_Store
-.git
-.github
+.idea
 .vscode
-*.log
+.DS_Store
+.env
