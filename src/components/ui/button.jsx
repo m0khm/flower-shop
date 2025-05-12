@@ -1,10 +1,11 @@
-import React from 'react';
-
-export function Button({ children, className = '', ...props }) {
+export function Button({ children, className = '', ...rest }) {
   return (
     <button
-      className={`inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition ${className}`}
-      {...props}
+      {...rest}
+      className={
+        'bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded ' +
+        className
+      }
     >
       {children}
     </button>
