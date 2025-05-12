@@ -3,6 +3,7 @@ FROM node:lts AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
+RUN npx prisma generate
 COPY . .
 RUN npm run build
 
