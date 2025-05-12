@@ -1,42 +1,26 @@
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { Button } from '@/components/ui/button';
 
 export default function Register() {
-  const [err, setErr] = useState('');
-  const onSubmit = async (e) => {
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+
+  const submit = async (e) => {
     e.preventDefault();
-    const body = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
-    const res = await fetch('/api/auth/register', {
+    await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: JSON.stringify({ email, password: pass }),
     });
-    if (!res.ok) {
-      const { message } = await res.json();
-      setErr(message);
-    } else {
-      await signIn('credentials', {
-        redirect: false,
-        email: body.email,
-        password: body.password,
-      });
-      window.location.href = '/';
-    }
+    location.href = '/auth/login';
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 max-w-sm mx-auto">
-      <input name="name" type="text" placeholder="Имя" required className="w-full" />
-      <input name="email" type="email" placeholder="Email" required className="w-full" />
-      <input name="password" type="password" placeholder="Пароль" required className="w-full" />
-      <button type="submit" className="w-full bg-green-500 text-white p-2 rounded">
-        Зарегистрироваться
-      </button>
-      {err && <p className="text-red-500">{err}</p>}
+    <form onSubmit={submit} className="max-w-sm mx-auto space-y-4">
+      <h1 className="text-xl">Регистрация</h1>
+      <input value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="Email" className="w-full" />
+      <input type="password" value={pass} onChange={(e) => setPass(e.target.value)} required placeholder="Пароль" className="w-full" />
+      <Button className="w-full">Создать аккаунт</Button>
     </form>
   );
 }
