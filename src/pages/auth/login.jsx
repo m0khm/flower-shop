@@ -1,22 +1,59 @@
+// src/pages/auth/login.jsx
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export default function Login() {
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
+  const [password, setPassword] = useState('');
 
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    await signIn('credentials', { redirect: true, email, password: pass, callbackUrl: '/' });
+    // пытаемся залогиниться через credentials-провайдер
+    const res = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (res.error) {
+      // выводим сообщение об ошибке
+      alert(res.error);
+    } else {
+      // при успешном входе перенаправляем на главную
+      window.location.href = '/';
+    }
   };
 
   return (
-    <form onSubmit={onSubmit} className="max-w-sm mx-auto space-y-4">
-      <h1 className="text-xl">Вход</h1>
-      <input value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="Email" className="w-full" />
-      <input type="password" value={pass} onChange={(e) => setPass(e.target.value)} required placeholder="Пароль" className="w-full" />
-      <Button className="w-full">Войти</Button>
-    </form>
+    <div className="max-w-sm mx-auto mt-10 p-6 border rounded shadow">
+      <h1 className="text-2xl font-semibold mb-6 text-center">Вход</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          placeholder="Email"
+          className="w-full border px-3 py-2 rounded focus:outline-none focus:ring"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          placeholder="Пароль"
+          className="w-full border px-3 py-2 rounded focus:outline-none focus:ring"
+        />
+        <Button className="w-full">Войти</Button>
+      </form>
+      <p className="mt-4 text-center">
+        Ещё нет аккаунта?{' '}
+        <Link href="/auth/register">
+          <a className="text-green-600 hover:underline">Зарегистрироваться</a>
+        </Link>
+      </p>
+    </div>
   );
 }
