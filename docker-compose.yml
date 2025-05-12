@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "3002:3001"
+      - "3001:3000"
     env_file:
       - .env
     restart: always
