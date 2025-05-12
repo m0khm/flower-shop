@@ -8,17 +8,16 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // вызываем API-регистрации
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
     if (res.ok) {
-      // после успешной регистрации идём на страницу входа
       window.location.href = '/auth/login';
     } else {
-      alert('Ошибка регистрации');
+      const { message } = await res.json();
+      alert(`Ошибка: ${message}`);
     }
   };
 
