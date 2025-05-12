@@ -1,15 +1,18 @@
-import { PrismaClient } from '@prisma/client'
+// src/lib/prisma.js
+import { PrismaClient } from '@prisma/client';
 
-let prisma
+let prisma;
 
 if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient()
+  // В продакшне всегда создаём новый клиент
+  prisma = new PrismaClient();
 } else {
-  // в режиме dev сохраняем единый экземпляр в глобале, чтобы при “хот-релоаде” не плодить соединения
+  // В режиме разработки сохраняем клиент в глобальном объекте,
+  // чтобы при хот-релоаде не создавать нового подключения каждый раз
   if (!global.prisma) {
-    global.prisma = new PrismaClient()
+    global.prisma = new PrismaClient();
   }
-  prisma = global.prisma
+  prisma = global.prisma;
 }
 
-export default prisma   // именно default-экспорт!
+export default prisma;
