@@ -21,7 +21,7 @@ COPY . .
 RUN npm run build
 
 # ─── Runtime Stage ───
-FROM node:lts-alpine
+FROM node:lts
 WORKDIR /app
 ENV NODE_ENV=production
 
