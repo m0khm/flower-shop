@@ -1,15 +1,13 @@
-datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+import { getSession } from 'next-auth/react';
+
+export default function Admin() {
+  return <h1 className="text-2xl">Админ-панель (заглушка)</h1>;
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
-model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  role     String @default("user")
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx);
+  if (!session || session.user.role !== 'admin') {
+    return { redirect: { destination: '/', permanent: false } };
+  }
+  return { props: {} };
 }
